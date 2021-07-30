@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#" />
+    <script src="https://cdn.mainnet.cash/mainnet-0.3.35.js"
+        integrity="sha384-BCSI14u5w+OfuqpJlYRCJqUJEEBURv38sSGd2O0zlGcYn0jvlKrmapmtJbiTYhdF"
+        crossorigin="anonymous"></script>
+
+    <title>BCH Watchlist</title>
+</head>
+
+<body style="text-align: center;">
+    <h1 style="font-size: 40px;">BCH Watchlist</h1>
+    <div>Enter Bitcoin Cash address to add to watchlist:</div>
+    <br>
+    <input type="text" id="search" placeholder="BCH address" style="width: 250px;" />
+    <button id="myBtn" onclick="onAdd()">ADD</button>
+
+    <template id="address-template" style="text-align: center;">
+        <div style="width: 330px; margin: 40px 20px;">
+            <img src="https://cdn.mainnet.cash/wait.svg" style="width: 15em;" id="deposit">
+            <div id="addr" style="overflow-wrap: anywhere;"></div>
+            <br>
+            <div id="balance"></div>
+            <div id="richer"></div>
+        </div>
+    </template>
+
+    <div id="Placeholder"></div>
+</body>
+
+</html>
+<script type="module" src="./script.js"></script>
