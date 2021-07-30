@@ -37,7 +37,7 @@ function createListWithTemplate(addresses) {
   const Placeholder=document.getElementById('Placeholder');
   const ul = document.createElement('ul');
   ul.setAttribute("id", "Placeholder");
-  ul.style="display: flex;"
+  ul.style="display: flex;min-height: 415px;flex-wrap: wrap;"
   const template = document.getElementById('address-template');
 
   addresses.forEach(async (address) => {
