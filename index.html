@@ -19,9 +19,11 @@
     <br>
     <input type="text" id="search" placeholder="BCH address" style="width: 250px;" />
     <button id="myBtn" onclick="onAdd()">ADD</button>
+    <div id="error"></div>
 
     <template id="address-template" style="text-align: center;">
-        <div style="width: 330px; margin: 40px 20px;">
+        <div style="width: 330px; margin: 40px 20px; position: relative;">
+            <div style="cursor: pointer; position: absolute;right: 40px;" id="x">X</div>
             <img src="https://cdn.mainnet.cash/wait.svg" style="width: 15em;" id="deposit">
             <div id="addr" style="overflow-wrap: anywhere;"></div>
             <br>
