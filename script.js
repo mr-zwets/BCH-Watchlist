@@ -1,12 +1,13 @@
 //testing mainnet.cash library
 
-const inputField = document.getElementById("search");
+const inputFieldAddr = document.getElementById("inputAddr");
 const button = document.getElementById("myBtn");
 let addresses=[]
+let texts=[]
 getCookies()
 
 // Execute a function when the user releases a key on the keyboard
-inputField.addEventListener("keyup", function(event) {
+inputFieldAddr.addEventListener("keyup", function(event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
       // Trigger the button element with a click
@@ -15,14 +16,15 @@ inputField.addEventListener("keyup", function(event) {
   });
 
 window.onAdd = async function(){
-  let input=inputField.value
-  inputField.value=''
+  let input=inputFieldAddr.value
+  inputFieldAddr.value=''
   if(addresses.find(address => input==address)!=undefined || addresses.length>=4){return;}
   try{
     await Wallet.watchOnly(input);
     addresses=[...addresses,input]
-    writeCookies()
+    texts=[...texts,""]
     createListWithTemplate(addresses);
+    writeCookies()
   } 
   catch(e){alert("Invalid BCH Address!")}
 }
@@ -38,6 +40,10 @@ function createListWithTemplate(addresses) {
 
   addresses.forEach(async (address, index) => {
     const addressCard = document.importNode(template.content, true);
+    addressCard.querySelector("#inputName").setAttribute("id", `inputName${index}`);
+    let inputFieldName= addressCard.querySelector(`#inputName${index}`)
+    inputFieldName.setAttribute("onchange", `changeName(${index})`);
+    texts[index]!=""? inputFieldName.value=texts[index]:null
     addressCard.querySelector('#x').setAttribute("onclick",`onRemove(${index})`);
     addressCard.querySelector('#addr').textContent=address
     try{
@@ -61,25 +67,38 @@ function createListWithTemplate(addresses) {
     ul.appendChild(addressCard);
   });
   Placeholder.replaceWith(ul);
+  console.log('a')
 };
 
 window.onRemove= function(index){
   addresses.splice(index, 1)
+  texts.splice(index, 1)
   writeCookies();
   createListWithTemplate(addresses);
+}
+
+window.changeName= function(index){
+  let input=document.querySelector(`#inputName${index}`).value
+  texts[index]=[input]
+  writeCookies();
 }
 
 function writeCookies(){
   for(let i=0;i<4;i++){
     document.cookie =addresses[i]==undefined? `address${i}=`:`address${i}=${addresses[i]}`
+    document.cookie =texts[i]==undefined? `text${i}=`:`text${i}=${texts[i]}`
   } 
 }
 
 function getCookies(){
   if(document.cookie){
     for(let i=0;i<4;i++){
-      let cookie=document.cookie.match('(^|;)\\s*' + `address${i}` + '\\s*=\\s*([^;]+)')?.pop() || ''
-      if(cookie!=""){addresses=[...addresses,cookie]}
+      let cookieAddr=document.cookie.match('(^|;)\\s*' + `address${i}` + '\\s*=\\s*([^;]+)')?.pop() || ''
+      let cookieName=document.cookie.match('(^|;)\\s*' + `text${i}` + '\\s*=\\s*([^;]+)')?.pop() || ''
+      if(cookieAddr!=""){
+        addresses=[...addresses,cookieAddr]
+        texts=[...texts,cookieName]
+      }
     }
   writeCookies()
   createListWithTemplate(addresses);
