@@ -1,0 +1,42 @@
+body {
+  text-align: center;
+}
+ul {
+  padding: 0;
+}
+#inputAddr {
+  width: 250px;
+}
+#address-template {
+  text-align: center;
+}
+.item {
+  width: 330px;
+  margin: 40px 20px;
+  position: relative;
+}
+.inputName {
+  width: 160px;
+  position: absolute;
+  left: 80px;
+  border: 0;
+  text-align: center;
+}
+#x {
+  cursor: pointer;
+  position: absolute;
+  right: 40px;
+}
+#QR {
+  width: 15em;
+}
+#addr {
+  overflow-wrap: anywhere;
+}
+#Placeholder {
+  display: flex;
+  min-height: 415px;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+}

@@ -35,7 +35,6 @@ function createListWithTemplate(addresses) {
   const Placeholder=document.getElementById('Placeholder');
   const ul = document.createElement('ul');
   ul.setAttribute("id", "Placeholder");
-  ul.style="display: flex;min-height: 415px;flex-wrap: wrap;"
   const template = document.getElementById('address-template');
 
   addresses.forEach(async (address, index) => {
@@ -50,7 +49,7 @@ function createListWithTemplate(addresses) {
       const wallet = await Wallet.watchOnly(address);
       let {bch,usd}=await wallet.getBalance();
       let textBalance=`balance: ${bch} BCH (${usd}$)`
-      addressCard.querySelector('#deposit').src = wallet.getDepositQr().src;
+      addressCard.querySelector('#QR').src = wallet.getDepositQr().src;
       addressCard.querySelector('#balance').textContent= textBalance
 
       let tiercount=-1
@@ -67,7 +66,6 @@ function createListWithTemplate(addresses) {
     ul.appendChild(addressCard);
   });
   Placeholder.replaceWith(ul);
-  console.log('a')
 };
 
 window.onRemove= function(index){

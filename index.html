@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.mainnet.cash/mainnet-0.3.35.js"
         integrity="sha384-BCSI14u5w+OfuqpJlYRCJqUJEEBURv38sSGd2O0zlGcYn0jvlKrmapmtJbiTYhdF"
         crossorigin="anonymous"></script>
@@ -13,27 +14,26 @@
     <title>BCH Watchlist</title>
 </head>
 
-<body style="text-align: center;">
+<body>
     <h1 style="font-size: 40px;">BCH Watchlist</h1>
     <div>Enter Bitcoin Cash address to add to watchlist:</div>
     <br>
-    <input type="text" id="inputAddr" placeholder="BCH address" style="width: 250px;" />
+    <input type="text" id="inputAddr" placeholder="BCH address" />
     <button id="myBtn" onclick="onAdd()">ADD</button>
 
-    <template id="address-template" style="text-align: center;">
-        <div style="width: 330px; margin: 40px 20px; position: relative;">
-            <input type="text" id="inputName" placeholder="name"
-                style="width: 160px;position: absolute;left: 80px;border:0;text-align: center;" />
-            <div style="cursor: pointer; position: absolute;right: 40px;" id="x">X</div>
-            <img src="https://cdn.mainnet.cash/wait.svg" style="width: 15em;" id="deposit">
-            <div id="addr" style="overflow-wrap: anywhere;"></div>
+    <template id="address-template">
+        <div class="item">
+            <input type="text" id="inputName" class="inputName" placeholder="name" />
+            <div id="x">X</div>
+            <img src="https://cdn.mainnet.cash/wait.svg" id="QR">
+            <div id="addr"></div>
             <br>
             <div id="balance"></div>
             <div id="richer"></div>
         </div>
     </template>
 
-    <div id="Placeholder" style="height: 447px;"></div>
+    <div id="Placeholder"></div>
     <br><br>
     <div>built with <a href="https://mainnet.cash/">Mainnet.cash</a></div>
 </body>
