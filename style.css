@@ -1,8 +1,14 @@
 body {
   text-align: center;
+  font-family: sans-serif;
 }
 ul {
   padding: 0;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 #inputAddr {
   width: 250px;
@@ -39,4 +45,14 @@ ul {
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
+}
+footer {
+  display: flex;
+  justify-content: center;
+}
+.githublogo{
+  width: 64px;
+  position:relative; 
+  top:-5px;
+  left: -5px;
 }

@@ -17,9 +17,10 @@
 <body>
     <h1 style="font-size: 40px;">BCH Watchlist</h1>
     <div>Enter Bitcoin Cash address to add to watchlist:</div>
-    <br>
-    <input type="text" id="inputAddr" placeholder="BCH address" />
-    <button id="myBtn" onclick="onAdd()">ADD</button>
+    <div class="container">
+        <input type="text" id="inputAddr" placeholder="BCH address" />
+        <button id="myBtn" onclick="onAdd()">ADD</button>
+    </div>
 
     <template id="address-template">
         <div class="item">
@@ -34,8 +35,15 @@
     </template>
 
     <div id="Placeholder"></div>
-    <br><br>
-    <div>built with <a href="https://mainnet.cash/">Mainnet.cash</a></div>
+    <br>
+    <footer>
+        <a href="https://github.com/mr-zwets/BCH-Watchlist" target="_blanc">
+            <img class="githublogo" src="./github.png">
+        </a>
+        <p>
+            built with <a href="https://mainnet.cash/" target="_blanc">Mainnet.cash</a>
+        </p>
+    </footer>
 </body>
 
 </html>
