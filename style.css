@@ -1,6 +1,12 @@
 body {
   text-align: center;
   font-family: sans-serif;
+  overflow: auto;
+  margin:0;
+}
+main{
+  min-height: 100vh;
+  overflow: auto;
 }
 h1 {
   font-size: 40px;
@@ -47,21 +53,28 @@ ul {
 }
 #Placeholder {
   display: flex;
-  min-height: 415px;
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
+  margin: 0 0 70px 0;
 }
 footer {
+  position: absolute;
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: -70px;
 }
 .githublogo{
   width: 64px;
   position:relative; 
   top:-5px;
   left: -5px;
+}
+@media screen and (max-height: 670px) {
+  footer {
+    margin-top: 0px;
+  }
 }
 @media screen and (max-width: 600px) {
   h1 {

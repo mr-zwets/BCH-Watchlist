@@ -15,26 +15,28 @@
 </head>
 
 <body>
-    <h1>BCH Watchlist</h1>
-    <div>Enter Bitcoin Cash address to add to watchlist:</div>
-    <div class="container">
-        <input type="text" id="inputAddr" placeholder="BCH address" />
-        <button id="myBtn" onclick="onAdd()">ADD</button>
-    </div>
-
-    <template id="address-template">
-        <div class="item">
-            <input type="text" id="inputName" class="inputName" placeholder="name" />
-            <div id="x">X</div>
-            <img src="https://cdn.mainnet.cash/wait.svg" id="QR">
-            <div id="addr"></div>
-            <br>
-            <div id="balance"></div>
-            <div id="richer"></div>
+    <main>
+        <h1>BCH Watchlist</h1>
+        <div>Enter Bitcoin Cash address to add to watchlist:</div>
+        <div class="container">
+            <input type="text" id="inputAddr" placeholder="BCH address" />
+            <button id="myBtn" onclick="onAdd()">ADD</button>
         </div>
-    </template>
 
-    <div id="Placeholder"></div>
+        <template id="address-template">
+            <div class="item">
+                <input type="text" id="inputName" class="inputName" placeholder="name" />
+                <div id="x">X</div>
+                <img src="https://cdn.mainnet.cash/wait.svg" id="QR">
+                <div id="addr"></div>
+                <br>
+                <div id="balance"></div>
+                <div id="richer"></div>
+            </div>
+        </template>
+
+        <div id="Placeholder"></div>
+    </main>
     <footer>
         <a href="https://github.com/mr-zwets/BCH-Watchlist" target="_blanc">
             <img class="githublogo" src="./github.png">
