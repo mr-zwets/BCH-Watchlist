@@ -2,9 +2,9 @@ body {
   text-align: center;
   font-family: sans-serif;
   overflow: auto;
-  margin:0;
+  margin: 0;
 }
-main{
+main {
   min-height: 100vh;
   overflow: auto;
 }
@@ -14,7 +14,7 @@ h1 {
 ul {
   padding: 0;
 }
-.container{
+.container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -26,8 +26,8 @@ ul {
   text-align: center;
 }
 .item {
-  width: 330px;
-  margin: 20px 20px;
+  width: 300px;
+  margin: 20px 30px;
   position: relative;
 }
 .inputName {
@@ -41,7 +41,7 @@ ul {
 #x {
   cursor: pointer;
   position: absolute;
-  right: 40px;
+  right: 20px;
   font-weight: bold;
 }
 #QR {
@@ -65,10 +65,10 @@ footer {
   justify-content: center;
   margin-top: -70px;
 }
-.githublogo{
+.githublogo {
   width: 64px;
-  position:relative; 
-  top:-5px;
+  position: relative;
+  top: -5px;
   left: -5px;
 }
 @media screen and (max-height: 670px) {
