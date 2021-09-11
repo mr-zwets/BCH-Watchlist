@@ -95,6 +95,8 @@ window.onRemove = function (index) {
   addresses.splice(index, 1);
   texts.splice(index, 1);
   writeLocalStorage();
+  localStorage.removeItem(`address${addresses.length}`);
+  localStorage.removeItem(`text${texts.length}`);
   createListWithTemplate(addresses);
 };
 
