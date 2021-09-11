@@ -4,7 +4,8 @@ const inputFieldAddr = document.getElementById("inputAddr");
 const button = document.getElementById("myBtn");
 let addresses=[]
 let texts=[]
-getCookies()
+readLocalStorage()
+createListWithTemplate(addresses);
 
 // Execute a function when the user releases a key on the keyboard
 inputFieldAddr.addEventListener("keyup", function(event) {
@@ -18,13 +19,20 @@ inputFieldAddr.addEventListener("keyup", function(event) {
 window.onAdd = async function(){
   let input=inputFieldAddr.value
   inputFieldAddr.value=''
-  if(addresses.find(address => input==address)!=undefined || addresses.length>=4){return;}
+  if(addresses.find(address => input==address)){
+    alert("Already added this address to the watchlist!")
+    return;
+  }
+  if( addresses.length>=4){
+    alert("Already added the maximum number of addresses to watchlist")
+    return;
+  }
   try{
     await Wallet.watchOnly(input);
     addresses=[...addresses,input]
     texts=[...texts,""]
     createListWithTemplate(addresses);
-    writeCookies()
+    writeLocalStorage()
   } 
   catch(e){alert("Invalid BCH Address!")}
 }
@@ -42,7 +50,7 @@ function createListWithTemplate(addresses) {
     addressCard.querySelector("#inputName").setAttribute("id", `inputName${index}`);
     let inputFieldName= addressCard.querySelector(`#inputName${index}`)
     inputFieldName.setAttribute("onchange", `changeName(${index})`);
-    texts[index]!=""? inputFieldName.value=texts[index]:null
+    inputFieldName.value=texts[index]
     addressCard.querySelector('#x').setAttribute("onclick",`onRemove(${index})`);
     addressCard.querySelector('#addr').textContent=address
     try{
@@ -71,34 +79,30 @@ function createListWithTemplate(addresses) {
 window.onRemove= function(index){
   addresses.splice(index, 1)
   texts.splice(index, 1)
-  writeCookies();
+  writeLocalStorage()
   createListWithTemplate(addresses);
 }
 
 window.changeName= function(index){
   let input=document.querySelector(`#inputName${index}`).value
   texts[index]=[input]
-  writeCookies();
+  writeLocalStorage()
 }
 
-function writeCookies(){
+function readLocalStorage(){
   for(let i=0;i<4;i++){
-    document.cookie =addresses[i]==undefined? `address${i}=`:`address${i}=${addresses[i]}`
-    document.cookie =texts[i]==undefined? `text${i}=`:`text${i}=${texts[i]}`
-  } 
+    const localAddr= localStorage.getItem(`address${i}`)
+    const localName= localStorage.getItem(`text${i}`,texts[i])
+    if(localAddr!==null){
+      addresses=[...addresses,localAddr]
+      texts=[...texts,localName]
+    }
+  }
 }
 
-function getCookies(){
-  if(document.cookie){
-    for(let i=0;i<4;i++){
-      let cookieAddr=document.cookie.match('(^|;)\\s*' + `address${i}` + '\\s*=\\s*([^;]+)')?.pop() || ''
-      let cookieName=document.cookie.match('(^|;)\\s*' + `text${i}` + '\\s*=\\s*([^;]+)')?.pop() || ''
-      if(cookieAddr!=""){
-        addresses=[...addresses,cookieAddr]
-        texts=[...texts,cookieName]
-      }
-    }
-  writeCookies()
-  createListWithTemplate(addresses);
+function writeLocalStorage(){
+  for(let i=0;i<addresses.length && i<4;i++){
+    localStorage.setItem(`address${i}`,addresses[i])
+    localStorage.setItem(`text${i}`,texts[i])
   }
 }
