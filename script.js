@@ -73,19 +73,15 @@ function createListWithTemplate(addresses) {
       let textBalance = `balance: ${bch} BCH (${usd}$)`;
       addressCard.querySelector("#QR").src = wallet.getDepositQr().src;
       addressCard.querySelector("#balance").textContent = textBalance;
-
-      let tiercount = -1;
+      let lastTier;
       stats.forEach((tier) => {
-        if (bch > tier[0]) {
-          tiercount++;
-        } else {
-          return;
-        }
+        if (bch < tier[0]) return;
+        lastTier = tier;
       });
-      if (tiercount >= 0) {
+      if (lastTier !== undefined) {
         addressCard.querySelector(
           "#richer"
-        ).textContent = `only ${stats[tiercount][1]} of addresses is richer than ${stats[tiercount][0]}BCH`;
+        ).textContent = `only ${lastTier[1]} of addresses is richer than ${lastTier[0]}BCH`;
       }
     } catch (e) {
       console.log(e);
