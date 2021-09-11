@@ -4,7 +4,7 @@ const inputFieldAddr = document.getElementById("inputAddr");
 const button = document.getElementById("myBtn");
 let addresses = [];
 let texts = [];
-readLocalStorage();
+readLocalStorage(); //look if a watchlist was already made
 createListWithTemplate(addresses);
 
 // Execute a function when the user releases a key on the keyboard
@@ -16,15 +16,12 @@ inputFieldAddr.addEventListener("keyup", function (event) {
   }
 });
 
+// Add address to watchlist
 window.onAdd = async function () {
   let input = inputFieldAddr.value;
   inputFieldAddr.value = "";
   if (addresses.find((address) => input == address)) {
     alert("Already added this address to the watchlist!");
-    return;
-  }
-  if (addresses.length >= 4) {
-    alert("Already added the maximum number of addresses to watchlist");
     return;
   }
   try {
@@ -38,6 +35,7 @@ window.onAdd = async function () {
   }
 };
 
+// statistics on what percentage of addresses owns atleast X amount of BCH
 let stats = [
   [0.001, "36.9%"],
   [0.01, "21.43%"],
@@ -49,6 +47,7 @@ let stats = [
   [10000, "0.00%"],
 ];
 
+// Display watchlist, fetch BCH and USD balances
 function createListWithTemplate(addresses) {
   const Placeholder = document.getElementById("Placeholder");
   const ul = document.createElement("ul");
@@ -91,23 +90,23 @@ function createListWithTemplate(addresses) {
   Placeholder.replaceWith(ul);
 }
 
+// Remove address from watchlist
 window.onRemove = function (index) {
   addresses.splice(index, 1);
   texts.splice(index, 1);
   writeLocalStorage();
-  localStorage.removeItem(`address${addresses.length}`);
-  localStorage.removeItem(`text${texts.length}`);
   createListWithTemplate(addresses);
 };
 
+// Add or Change name of an address
 window.changeName = function (index) {
   let input = document.querySelector(`#inputName${index}`).value;
-  texts[index] = [input];
-  writeLocalStorage();
+  localStorage.setItem(`text${index}`, input);
 };
 
+// Read Addresses and names from local storage
 function readLocalStorage() {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < Object.keys(localStorage).length / 2; i++) {
     const localAddr = localStorage.getItem(`address${i}`);
     const localName = localStorage.getItem(`text${i}`, texts[i]);
     if (localAddr !== null) {
@@ -117,9 +116,11 @@ function readLocalStorage() {
   }
 }
 
+// Write Addresses and names to local storage
 function writeLocalStorage() {
-  for (let i = 0; i < addresses.length && i < 4; i++) {
-    localStorage.setItem(`address${i}`, addresses[i]);
-    localStorage.setItem(`text${i}`, texts[i]);
-  }
+  localStorage.clear();
+  addresses.forEach((address, index) => {
+    localStorage.setItem(`address${index}`, address);
+    localStorage.setItem(`text${index}`, texts[index]);
+  });
 }
