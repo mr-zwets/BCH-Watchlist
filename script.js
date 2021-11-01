@@ -2,10 +2,9 @@
 
 const inputFieldAddr = document.getElementById("inputAddr");
 const button = document.getElementById("myBtn");
-let addresses = [];
-let texts = [];
+let watchlist = [];
 readLocalStorage(); //look if a watchlist was already made
-createListWithTemplate(addresses);
+createListWithTemplate();
 
 // Execute a function when the user releases a key on the keyboard
 inputFieldAddr.addEventListener("keyup", function (event) {
@@ -18,17 +17,17 @@ inputFieldAddr.addEventListener("keyup", function (event) {
 
 // Add address to watchlist
 window.onAdd = async function () {
-  let input = inputFieldAddr.value;
+  let newAddress = inputFieldAddr.value;
   inputFieldAddr.value = "";
-  if (addresses.find((address) => input == address)) {
+  const newAddrObj = { address: newAddress, name: ""};
+  if (watchlist.find( addrObj => addrObj.address === newAddress )){
     alert("Already added this address to the watchlist!");
     return;
   }
   try {
-    await Wallet.watchOnly(input);
-    addresses = [...addresses, input];
-    texts = [...texts, ""];
-    createListWithTemplate(addresses);
+    await Wallet.watchOnly(newAddress);
+    watchlist.push(newAddrObj)
+    createListWithTemplate();
     writeLocalStorage();
   } catch (e) {
     alert("Invalid BCH Address!");
@@ -48,20 +47,20 @@ let stats = [
 ];
 
 // Display watchlist, fetch BCH and USD balances
-function createListWithTemplate(addresses) {
+function createListWithTemplate() {
   const Placeholder = document.getElementById("Placeholder");
   const ul = document.createElement("ul");
   ul.setAttribute("id", "Placeholder");
   const template = document.getElementById("address-template");
 
-  addresses.forEach(async (address, index) => {
+  watchlist.forEach(async ({address, name}, index) => {
     const addressCard = document.importNode(template.content, true);
     addressCard
       .querySelector("#inputName")
       .setAttribute("id", `inputName${index}`);
     let inputFieldName = addressCard.querySelector(`#inputName${index}`);
     inputFieldName.setAttribute("onchange", `changeName(${index})`);
-    inputFieldName.value = texts[index];
+    inputFieldName.value = name;
     addressCard
       .querySelector("#x")
       .setAttribute("onclick", `onRemove(${index})`);
@@ -92,35 +91,26 @@ function createListWithTemplate(addresses) {
 
 // Remove address from watchlist
 window.onRemove = function (index) {
-  addresses.splice(index, 1);
-  texts.splice(index, 1);
+  watchlist.splice(index, 1);
   writeLocalStorage();
-  createListWithTemplate(addresses);
+  createListWithTemplate();
 };
 
 // Add or Change name of an address
 window.changeName = function (index) {
-  let input = document.querySelector(`#inputName${index}`).value;
-  localStorage.setItem(`text${index}`, input);
+  let inputName = document.querySelector(`#inputName${index}`).value;
+  watchlist[index].name = inputName;
+  writeLocalStorage();
 };
 
-// Read Addresses and names from local storage
+// Read Watchlist from local storage if there is one
 function readLocalStorage() {
-  for (let i = 0; i < Object.keys(localStorage).length / 2; i++) {
-    const localAddr = localStorage.getItem(`address${i}`);
-    const localName = localStorage.getItem(`text${i}`, texts[i]);
-    if (localAddr !== null) {
-      addresses = [...addresses, localAddr];
-      texts = [...texts, localName];
-    }
-  }
+  const localWatchlist = JSON.parse(localStorage.getItem("watchlist"))
+  if(localWatchlist) watchlist = localWatchlist;
 }
 
 // Write Addresses and names to local storage
 function writeLocalStorage() {
   localStorage.clear();
-  addresses.forEach((address, index) => {
-    localStorage.setItem(`address${index}`, address);
-    localStorage.setItem(`text${index}`, texts[index]);
-  });
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
 }
